@@ -1,0 +1,32 @@
+---
+# tasks file for desktop-basic
+- name: Instalar pacotes iniciais
+  apt:
+    name: ['vim', 'nano', 'sl', 'dnsutils', 'terminator', 'flameshot', 'openssh-server', 'workrave', 'htop', 'gimp', 'virtualbox', 'wget', 'zsh']
+    update_cache: yes
+    state: present
+
+- name: Instalar pacotes iniciais com snap
+  snap:
+    name: ['spotify', 'drawio']
+    classic: yes
+    state: present
+
+- name: Instalar pacotes desenv apt
+  apt:
+    name: ['git', 'mysql-client', 'openjdk-11-jdk', 'openjdk-8-jdk', 'jq']
+    update_cache: yes
+    state: present
+
+- name: Instalar pacotes desenv snap
+  snap:
+    name: ['code', 'postman','beekeeper-studio']
+    classic: yes
+    state: present
+
+- name: Instalar pacotes para video aula
+  apt:
+    name: ['kazam', 'audacity']
+
+- name: Configure ZSH
+  import_tasks: zsh-config.yml

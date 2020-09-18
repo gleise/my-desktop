@@ -1,0 +1,7 @@
+# Instalacao ambiente trabalho
+- name: Instalacao ambiente
+  hosts: localhost
+  roles:
+    - desktop-basic
+    - desktop-work
+    - ms_teams

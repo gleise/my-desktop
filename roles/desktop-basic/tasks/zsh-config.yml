@@ -1,0 +1,91 @@
+---
+# tasks file for desktop-basic
+- name: Instala pacotes necessarios
+  apt:
+    name: ['zsh', 'powerline', 'fonts-powerline', 'dconf-cli']
+    update_cache: yes
+    state: present
+
+- name: Instala o Oh My Zsh
+  git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+    dest: '{{ homedir }}/.oh-my-zsh'
+
+- name: Create config file
+  copy:
+    src: '{{ homedir }}/.oh-my-zsh/templates/zshrc.zsh-template'
+    dest: '{{ homedir }}/.zshrc'
+
+- name: Set zsh as the default login shell
+  user:
+    name: '{{ usuario }}'
+    shell: /usr/bin/zsh
+
+- name: Instalando tema dracula para zsh - https://draculatheme.com
+  git:
+    repo: 'https://github.com/dracula/zsh.git'
+    dest: '{{ homedir }}/.oh-my-zsh/custom/themes/dracula'
+
+- name: Cria o synlink para o tema
+  file:
+    src: '{{ homedir }}/.oh-my-zsh/custom/themes/dracula/dracula.zsh-theme'
+    dest: '{{ homedir }}/.oh-my-zsh/themes/dracula.zsh-theme'
+    owner: '{{ usuario }}'
+    group: '{{ usuario }}'
+    state: link    
+
+- name: Muda o thema para agnoster/dracula
+  lineinfile:
+    path: '{{ homedir }}/.zshrc'
+    regexp: '^ZSH_THEME='
+    line: ZSH_THEME=dracula
+
+- name: Instalando Syntax Highlighting
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting.git'
+    dest: '{{ homedir }}/.zsh-syntax-highlighting'
+    depth: 1
+
+- name: Instalando zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: '{{ homedir }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions'
+  
+- name: Adicionando Syntax na configuracao
+  lineinfile:
+    path: '{{ homedir }}/.zshrc'
+    line: 'source {{ homedir }}/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+    create: yes
+
+- name: Instalando tema dracula para terminal - https://draculatheme.com
+  git:
+    repo: 'https://github.com/dracula/gnome-terminal'
+    dest: '{{ homedir }}/dracula-gnome-terminal'
+  
+- name: Remove hostname do prompt
+  lineinfile:
+    path: '{{ homedir }}/.zshrc'
+    line: 'prompt_context() {}'
+    create: yes
+  
+- name: Ativa os plugins
+  lineinfile:
+    path: '{{ homedir }}/.zshrc'
+    regexp: '^plugins='
+    line: plugins=(git docker docker-compose kubectl aws zsh-autosuggestions vi-mode)
+
+- name: Atualizar as permissoes zsh-syntax-highlighting
+  file:
+    path: '{{ homedir }}/.zsh-syntax-highlighting'
+    state: directory
+    recurse: yes
+    owner: '{{ usuario }}'
+    group: '{{ usuario }}'
+
+- name: Atualizar as permissoes oh-my-zsh
+  file:
+    path: '{{ homedir }}/.oh-my-zsh'
+    state: directory
+    recurse: yes
+    owner: '{{ usuario }}'
+    group: '{{ usuario }}'    

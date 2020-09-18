@@ -1,0 +1,32 @@
+---
+# tasks file for desktop-work
+#
+- name: Instalar pacotes comunicadores - snap
+  snap:
+    name: ['rocketchat-desktop', 'slack']
+    classic: yes
+    state: present
+
+- name: Instalando pacotes para Configurar VPN
+  apt:
+    name: ['openvpn', 'network-manager-openvpn', 'network-manager-openvpn-gnome', 'network-manager-openconnect-gnome']
+    state: present
+    update_cache: yes
+
+# arrumando resolv.conf
+
+- name: Verificando se o resolv.conf ja rodou
+  command: test -f /etc/resolv.conf.bk
+  register: result
+  ignore_errors: yes
+
+- name: Move resolv.conf original para bk
+  command: mv /etc/resolv.conf /etc/resolv.conf.bk
+  when: result.rc == 1
+
+- name: Criando o link simbolico para o novo resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+  when: result.rc == 1

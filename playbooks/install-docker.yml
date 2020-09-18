@@ -1,0 +1,5 @@
+# Playbook para instalar o docker
+- name: Install docker
+  hosts: localhost
+  roles:
+    - docker

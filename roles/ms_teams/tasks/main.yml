@@ -1,0 +1,16 @@
+---
+# tasks file for ms_teams
+
+- name: Adicionando a chave da MS
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+
+- name: Inclui o repositorio do ms-teams
+  apt_repository:
+    repo: deb https://packages.microsoft.com/repos/ms-teams stable main
+    state: present
+
+- name: Instalando o MS Teams
+  apt: name=teams state=present update_cache=yes
