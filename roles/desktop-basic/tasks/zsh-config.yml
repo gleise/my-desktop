@@ -72,7 +72,7 @@
   lineinfile:
     path: '{{ homedir }}/.zshrc'
     regexp: '^plugins='
-    line: plugins=(git docker docker-compose kubectl aws zsh-autosuggestions vi-mode)
+    line: plugins=(git docker docker-compose kubectl aws zsh-autosuggestions vi-mode terraform)
 
 - name: Atualizar as permissoes zsh-syntax-highlighting
   file:
