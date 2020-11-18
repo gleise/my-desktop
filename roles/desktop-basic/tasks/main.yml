@@ -36,3 +36,9 @@
 
 - name: Configura o terminator como default - parte 2
   command: gsettings set org.gnome.desktop.default-applications.terminal exec-arg "-x"
+
+- name: Instalar chrome
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    state: present
+  become: true
