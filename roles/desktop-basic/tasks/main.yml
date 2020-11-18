@@ -8,7 +8,7 @@
 
 - name: Instalar pacotes iniciais com snap
   snap:
-    name: ['spotify', 'drawio']
+    name: ['spotify', 'drawio', 'chromium']
     classic: yes
     state: present
 
@@ -30,3 +30,9 @@
 
 - name: Configure ZSH
   import_tasks: zsh-config.yml
+
+- name: Configura o terminator como default
+  command: gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/terminator
+
+- name: Configura o terminator como default - parte 2
+  command: gsettings set org.gnome.desktop.default-applications.terminal exec-arg "-x"
