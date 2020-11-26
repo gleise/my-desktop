@@ -1,7 +1,6 @@
-# Instalacao ambiente trabalho
+# Instalacao ambiente basico
 - name: Instalacao ambiente
   hosts: localhost
   roles:
     - desktop-basic
-    - desktop-work
-    - ms_teams
+    - terraform

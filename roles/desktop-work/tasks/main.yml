@@ -3,7 +3,7 @@
 #
 - name: Instalar pacotes comunicadores - snap
   snap:
-    name: ['rocketchat-desktop', 'slack']
+    name: ['kontena-lens', 'slack']
     classic: yes
     state: present
 

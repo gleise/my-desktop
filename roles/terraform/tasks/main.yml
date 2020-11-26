@@ -1,0 +1,18 @@
+---
+# tasks file for terraform
+
+- name: Adicionando HashiCorp GPG
+  apt_key: 
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Adicionar repositorio da HashiCorp
+  apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
+    state: present
+
+- name: Instalando o Terraform
+  apt:
+    name: terraform
+    state: present
+    update_cache: yes
