@@ -1,0 +1,16 @@
+---
+# tasks file for ms_teams
+
+- name: Adicionando a chave do repo
+  apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
+    state: present
+
+
+- name: Inclui o repositorio do brave
+  apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main
+    state: present
+
+- name: Instalando o MS Teams
+  apt: name=brave-browser state=present update_cache=yes

@@ -20,7 +20,7 @@
 
 - name: Instalar pacotes desenv snap
   snap:
-    name: ['code', 'postman','beekeeper-studio']
+    name: ['code', 'postman','beekeeper-studio', 'dbeaver-ce']
     classic: yes
     state: present
 
